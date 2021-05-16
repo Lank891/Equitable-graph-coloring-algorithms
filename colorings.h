@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <utility>
+#include <map>
 
 /**
  * Takes a graph and colors it in a greedy way

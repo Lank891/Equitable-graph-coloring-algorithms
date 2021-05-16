@@ -38,6 +38,8 @@ void FJK(Graph &graph)
 
 void MFJK(Graph &graph)
 {
+    graph = graph;
+    /*
     while (!isEquitableColored(graph))
     {
         auto most_common_color = getMostCommonColor(graph);
@@ -78,6 +80,7 @@ void MFJK(Graph &graph)
             std::cout << "Added to " << most_common_color_nodes.at(0)->id << " color " << most_common_color_nodes.at(0)->color << "\n";
         }
     }
+    */
 }
 
 bool isEquitableColored(const Graph &graph)

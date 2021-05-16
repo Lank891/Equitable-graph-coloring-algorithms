@@ -64,4 +64,4 @@ std::pair<int, Node *> maxDegree(Graph &graph);
  * @param nodes List of node pointers to check
  * @returns Pair with maximum degree and pointer to node with highest degree
  */
-std::pair<int, Node *> maxDegree(std::vector<Node *> nodes)
+std::pair<int, Node *> maxDegree(std::vector<Node *> nodes);
