@@ -83,3 +83,31 @@ std::pair<color_t, color_count_t> getMostCommonColor(const Graph &graph);
  * @returns Vector of pointers to nodes (editable) with wanted color
  */
 std::vector<Node*> getNodesWithColor(Graph &graph, color_t color);
+
+
+/**
+ * Gets saturation degree of a node
+ * 
+ * @param graph Graph to check
+ * @param node node to check
+ * @returns Int saturation degree of node
+ */
+int getSaturationDegree(const Graph &graph, const Node &node);
+
+/**
+ * Gets maximum saturation degree of a Graph
+ * 
+ * @param graph Graph to check
+ * @returns Int saturation degree of Graph
+ */
+int getMaxSaturationDegree(const Graph &graph);
+
+/**
+ * Check if Graph is fully colored
+ * 
+ * @param graph Graph to check
+ * @returns True if graph is fully colored
+ */
+bool checkIfFullColored(const Graph &graph);
+
+//std::vector<color_t> colorOrder(const Graph &graph);

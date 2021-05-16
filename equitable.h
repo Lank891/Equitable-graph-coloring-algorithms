@@ -1,6 +1,7 @@
 #pragma once
 #include "graph.h"
 
+
 /**
  * Takes a colored and recolors it using FJK coloring
  * 

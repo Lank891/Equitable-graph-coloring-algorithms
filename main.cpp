@@ -38,15 +38,22 @@ int main(int argc, char *argv[]) {
 
     Graph g = readFromStream(file);
 
-    std::cout << "Graph found:\n" << g << "\n\n------\n\n";
+    //std::cout << "Graph found:\n" << g << "\n\n------\n\n";
 
     greedyColoring(g);
-
+    
     std::cout << "Greedly coloured:\n" << g << "\nNumber of colors: " << numberOfUsedColors(g) << "\n\n------\n\n";
 
+    //SLFColoring(g);
+
+    //std::cout << "SLF coloured:\n" << g << "\nNumber of colors: " << numberOfUsedColors(g) << "\n\n------\n\n";
+
     FJK(g);
+    //MFJK(g);
+    //std::cout << "Greedly to FJK coloured:\n" << g << "\nNumber of colors (equitable): " << numberOfUsedColors(g) << "\n\n------\n\n";
+    //std::cout << "SLF to FJK coloured:\n" << g << "\nNumber of colors (equitable): " << numberOfUsedColors(g) << "\n\n------\n\n";
+    //std::cout << "Greedly to MFJK coloured:\n" << g << "\nNumber of colors (equitable): " << numberOfUsedColors(g) << "\n\n------\n\n";
 
-    std::cout << "Greedly to FJK coloured:\n" << g << "\nNumber of colors (equitable): " << numberOfUsedColors(g) << "\n\n------\n\n";
-
+    
     return 0;
 }

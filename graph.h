@@ -49,3 +49,13 @@ std::vector<const Node*> getNeighbours(const Graph &graph, const Node &node);
  * @returns Graph created based on the stream
  */
 Graph readFromStream(std::istream &inputStream);
+
+
+/**
+ * Get max degree of a Graph
+ * 
+ * @param graph Graph to check
+ * @returns Maximum degree of graph
+ */
+int maxDegree(Graph &graph);
+
