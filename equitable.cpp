@@ -22,7 +22,6 @@ void FJK(Graph &graph)
             {
                 node->color = least_common_color.first;
                 recolored = true;
-                std::cout << "Recolored " << node->id << " to " << node->color << "\n";
                 break;
             }
         }
@@ -31,7 +30,6 @@ void FJK(Graph &graph)
         {
             int new_color = getLowestNotUsedColor(graph);
             most_common_color_nodes.at(0)->color = new_color;
-            std::cout << "Added to " << most_common_color_nodes.at(0)->id << " color " << new_color << "\n";
         }
     }
 }
@@ -65,7 +63,6 @@ void MFJK(Graph &graph)
                     {
                         node->color = color.first;
                         recolored = true;
-                        std::cout << "Recolored " << node->id << " to " << node->color << "\n";
                         break;
                     }
                 }
@@ -78,7 +75,6 @@ void MFJK(Graph &graph)
             auto node_to_recolor = getNodesWithColor(graph, most_common_color).at(0);
             int new_color = getLowestNotUsedColor(graph);
             node_to_recolor->color = new_color;
-            std::cout << "Added to " << node_to_recolor->id << " color " << new_color << "\n";
         }
 
         one_before_last_common_color = last_most_common_color;
