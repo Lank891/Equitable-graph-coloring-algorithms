@@ -22,6 +22,8 @@ Additionally 9 graphs are prepared as example ones:
 * Corona graph K4 K4
 * Star graph with 8 vertices
 * Petersen graph with 24 vertices
+* Disconnected graph that consist of a square and second square with one diagonal
+* Two fish-like graphs (k and l) with slightly different ordering of vertices
 
 Files with those exaples are inside `test-graphs` folder
 
