@@ -29,58 +29,61 @@ void FJK(Graph &graph)
         //Else add new color
         if (!recolored)
         {
-            int newColor = getLowestNotUsedColor(graph);
-            most_common_color_nodes.at(0)->color = newColor;
-            std::cout << "Added to " << most_common_color_nodes.at(0)->id << " color " << most_common_color_nodes.at(0)->color << "\n";
+            int new_color = getLowestNotUsedColor(graph);
+            most_common_color_nodes.at(0)->color = new_color;
+            std::cout << "Added to " << most_common_color_nodes.at(0)->id << " color " << new_color << "\n";
         }
     }
 }
 
 void MFJK(Graph &graph)
 {
-    graph = graph;
-    /*
+    color_t one_before_last_common_color = NO_COLOR;
+    color_t last_most_common_color = NO_COLOR;
     while (!isEquitableColored(graph))
     {
-        auto most_common_color = getMostCommonColor(graph);
-        auto least_common_color = getLeastCommonColor(graph);
+        auto colors = getColorsOrderedByFrequency(graph);
+        
+        color_t most_common_color = colors.back().first;
 
-        auto most_common_color_nodes = getNodesWithColor(graph, most_common_color.first);
-
-        auto colors = getColors(graph);
         bool recolored = false;
 
-        for (Node *node : most_common_color_nodes)
-        {
+        //Check for infinite loop of recolors
+        if(most_common_color != one_before_last_common_color) {
+            for(auto &color : colors) {
+                auto nodes_to_recolor = getNodesWithColor(graph, most_common_color);
 
-            //auto min = *std::min_element(colors.begin(), colors.end(),
-            //[](const auto& l, const auto& r) { return l.second < r.second; });
+                //If next color to consider is more or the same frequent then color we want to get rid of - stop
+                if((int)nodes_to_recolor.size() <= color.second) {
+                    break;
+                }
 
-            for (auto col : colors)
-            {
-
-                if (checkIfColorIsValid(graph, *node, col.first))
+                //Recolor one of the vertices into considered color
+                for (Node *node : nodes_to_recolor)
                 {
-                    node->color = col.first;
-                    recolored = true;
-                    std::cout << "Recolored " << node->id << " to " << node->color << "\n";
-                    if (getNodesWithColor(graph, node->color).size() >= getNodesWithColor(graph, col.first).size())
+                    if (checkIfColorIsValid(graph, *node, color.first))
                     {
+                        node->color = color.first;
+                        recolored = true;
+                        std::cout << "Recolored " << node->id << " to " << node->color << "\n";
                         break;
                     }
                 }
             }
-            //colors.erase(min.first);
         }
 
+        //Add new color if no recolorings occured
         if (!recolored)
         {
-            int newColor = getLowestNotUsedColor(graph);
-            most_common_color_nodes.at(0)->color = newColor;
-            std::cout << "Added to " << most_common_color_nodes.at(0)->id << " color " << most_common_color_nodes.at(0)->color << "\n";
+            auto node_to_recolor = getNodesWithColor(graph, most_common_color).at(0);
+            int new_color = getLowestNotUsedColor(graph);
+            node_to_recolor->color = new_color;
+            std::cout << "Added to " << node_to_recolor->id << " color " << new_color << "\n";
         }
+
+        one_before_last_common_color = last_most_common_color;
+        last_most_common_color = most_common_color;
     }
-    */
 }
 
 bool isEquitableColored(const Graph &graph)

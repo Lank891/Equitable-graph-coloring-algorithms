@@ -142,6 +142,32 @@ std::pair<color_t, color_count_t> getMostCommonColor(const Graph &graph)
     return std::make_pair<>(most_common_color, most_common_freq);
 }
 
+std::vector<std::pair<color_t, color_count_t>> getColorsOrderedByFrequency(const Graph &graph)
+{
+    auto colors = getColors(graph);
+
+    std::vector<std::pair<color_t, color_count_t>> sorted_colors;
+    std::copy(colors.begin(), colors.end(), std::back_inserter<std::vector<std::pair<color_t, color_count_t>>>(sorted_colors));
+    std::sort(sorted_colors.begin(), sorted_colors.end(), 
+        [](const std::pair<color_t, color_count_t> &l, const std::pair<color_t, color_count_t> &r) 
+        {
+            if (l.second != r.second)
+                return l.second < r.second;
+            return l.first <= r.first;
+        }
+    );
+
+    sorted_colors.erase(std::remove_if(sorted_colors.begin(),
+                                        sorted_colors.end(),
+                                        [](std::pair<color_t, color_count_t> color)
+                                        {
+                                            return color.first == NO_COLOR || color.second <= 0;
+                                        }),
+                        sorted_colors.end());
+
+    return sorted_colors;
+}
+
 std::vector<Node *> getNodesWithColor(Graph &graph, color_t color)
 {
     std::vector<Node *> nodes;

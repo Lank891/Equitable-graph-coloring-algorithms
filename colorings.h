@@ -68,6 +68,7 @@ int numberOfUsedColors(const Graph &graph);
  * @returns Pair with first value being the least common color and second value being the amount of it
  */
 std::pair<color_t, color_count_t> getLeastCommonColor(const Graph &graph);
+
 /**
  * Gets most common color in a graph together with the amount nodes colored with it
  * 
@@ -77,6 +78,14 @@ std::pair<color_t, color_count_t> getLeastCommonColor(const Graph &graph);
 std::pair<color_t, color_count_t> getMostCommonColor(const Graph &graph);
 
 /**
+ * Gets colors ordered by frequency (most common last). Vertices without color are not counted.
+ * 
+ * @param graph Graph to get colors from
+ * @returns Vector of pairs - first element of a pair is a color, second element - amount of vertices
+ */
+std::vector<std::pair<color_t, color_count_t>> getColorsOrderedByFrequency(const Graph &graph);
+
+/**
  * Gets nodes of a given color from a graph
  * 
  * @param graph Graph to check
@@ -84,7 +93,6 @@ std::pair<color_t, color_count_t> getMostCommonColor(const Graph &graph);
  * @returns Vector of pointers to nodes (editable) with wanted color
  */
 std::vector<Node *> getNodesWithColor(Graph &graph, color_t color);
-
 
 /**
  * Gets saturation degree of a node

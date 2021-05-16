@@ -57,11 +57,11 @@ int main(int argc, char *argv[]) {
 
     FJK(graphGreedyFJK);
     FJK(graphSLFFJK);
-    //MFJK(g);
+    MFJK(graphGreedyMFJK);
     
-    std::cout << "Greedly to FJK coloured:\n" << graphGreedyFJK << "\nNumber of colors (equitable): " << numberOfUsedColors(graphGreedyFJK) << "\n\n------\n\n";
-    std::cout << "SLF to FJK coloured:\n" << graphSLFFJK << "\nNumber of colors (equitable): " << numberOfUsedColors(graphSLFFJK) << "\n\n------\n\n";
-    //std::cout << "Greedly to MFJK coloured:\n" << g << "\nNumber of colors (equitable): " << numberOfUsedColors(g) << "\n\n------\n\n";
+    std::cout << "Greedly to FJK coloured:\n" << graphGreedyFJK << "\nNumber of colors: " << numberOfUsedColors(graphGreedyFJK) << "\n\n------\n\n";
+    std::cout << "SLF to FJK coloured:\n" << graphSLFFJK << "\nNumber of colors: " << numberOfUsedColors(graphSLFFJK) << "\n\n------\n\n";
+    std::cout << "Greedly to MFJK coloured:\n" << graphGreedyMFJK << "\nNumber of colors: " << numberOfUsedColors(graphGreedyMFJK) << "\n\n------\n\n";
 
     return 0;
 }
