@@ -1,8 +1,8 @@
 #pragma once
 #include "graph.h"
+#include <map>
 #include <vector>
 #include <utility>
-#include <map>
 
 /**
  * Takes a graph and colors it in a greedy way
@@ -82,32 +82,32 @@ std::pair<color_t, color_count_t> getMostCommonColor(const Graph &graph);
  * @param color Color to check
  * @returns Vector of pointers to nodes (editable) with wanted color
  */
-std::vector<Node*> getNodesWithColor(Graph &graph, color_t color);
+std::vector<Node *> getNodesWithColor(Graph &graph, color_t color);
 
 
 /**
  * Gets saturation degree of a node
  * 
  * @param graph Graph to check
- * @param node node to check
- * @returns Int saturation degree of node
+ * @param node Node to check
+ * @returns Saturation degree of node
  */
 int getSaturationDegree(const Graph &graph, const Node &node);
 
 /**
- * Gets maximum saturation degree of a Graph
+ * Gets maximum saturation degree of a Graph together with vector of nodes with that degree. 
+ * It considers either all vertices or only uncolored ones
  * 
  * @param graph Graph to check
- * @returns Int saturation degree of Graph
+ * @param excludeColored True (default) if colored vertives should not be considered
+ * @returns Pair with maximum saturation degree and vector of pointers to nodes with it
  */
-int getMaxSaturationDegree(const Graph &graph);
+std::pair<int, std::vector<Node *>> getMaxSaturationDegree(Graph &graph, bool excludeColored = true);
 
 /**
- * Check if Graph is fully colored
+ * Checks if Graph is fully colored
  * 
  * @param graph Graph to check
  * @returns True if graph is fully colored
  */
-bool checkIfFullColored(const Graph &graph);
-
-//std::vector<color_t> colorOrder(const Graph &graph);
+bool isGraphColored(const Graph &graph);

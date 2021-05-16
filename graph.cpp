@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <sstream>
 #include <iterator>
+#include <climits>
 
 std::ostream &operator<<(std::ostream &os, const Node &node)
 {
@@ -64,19 +65,35 @@ Graph readFromStream(std::istream &inputStream)
     return g;
 }
 
-
-
-int maxDegree(Graph &graph)
+std::pair<int, Node *> maxDegree(Graph &graph)
 {
-
-    std::vector<int> degrees;
+    int maxDegree = INT_MIN;
+    Node *maxDegreeNode = nullptr;
 
     for (Node &node : graph)
     {
-        degrees.emplace_back(getNeighbours(graph, node).size());
+        int degree = node.neighbours.size();
+        if(degree > maxDegree) {
+            maxDegree = degree;
+            maxDegreeNode = &node;
+        }
     }
 
-    auto maxElement = *std::max_element(degrees.begin(), degrees.end());
+    return std::make_pair(maxDegree, maxDegreeNode);
+}
 
-    return maxElement;
+std::pair<int, Node *> maxDegree(std::vector<Node *> nodes) {
+    int maxDegree = INT_MIN;
+    Node *maxDegreeNode = nullptr;
+
+    for (Node *node : nodes)
+    {
+        int degree = node->neighbours.size();
+        if(degree > maxDegree) {
+            maxDegree = degree;
+            maxDegreeNode = node;
+        }
+    }
+
+    return std::make_pair(maxDegree, maxDegreeNode);
 }

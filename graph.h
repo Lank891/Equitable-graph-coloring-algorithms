@@ -40,7 +40,7 @@ std::ostream& operator<<(std::ostream &os, const Graph &graph);
  * @param node Node to find neighbours of
  * @returns Vector of pointers to non-editable nodes that are neighbours of given node in a graph
  */
-std::vector<const Node*> getNeighbours(const Graph &graph, const Node &node);
+std::vector<const Node *> getNeighbours(const Graph &graph, const Node &node);
 
 /**
  * Creates a graph based on a input stream
@@ -50,12 +50,18 @@ std::vector<const Node*> getNeighbours(const Graph &graph, const Node &node);
  */
 Graph readFromStream(std::istream &inputStream);
 
-
 /**
- * Get max degree of a Graph
+ * Get max degree of a Graph together with pointer to the node
  * 
  * @param graph Graph to check
- * @returns Maximum degree of graph
+ * @returns Pair with maximum degree and pointer to node with highest degree
  */
-int maxDegree(Graph &graph);
+std::pair<int, Node *> maxDegree(Graph &graph);
 
+/**
+ * Gets pointer to node from list with the highest degree
+ * 
+ * @param nodes List of node pointers to check
+ * @returns Pair with maximum degree and pointer to node with highest degree
+ */
+std::pair<int, Node *> maxDegree(std::vector<Node *> nodes)

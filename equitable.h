@@ -1,13 +1,13 @@
 #pragma once
 #include "graph.h"
 
-
 /**
  * Takes a colored and recolors it using FJK coloring
  * 
  * @param graph Graph that will be recolored, will be modified
  */ 
 void FJK(Graph &graph);
+
 /**
  * Takes a colored and recolors it using Modified FJK (MFJK) coloring
  * 

@@ -14,71 +14,15 @@ void greedyColoring(Graph &graph)
 
 void SLFColoring(Graph &graph)
 {
-    int maxSat = 0;
-    std::vector<int> Ids;
-    
-    //First Color nodes with maximum degrees which can be colord only by first color
-    for (Node &node : graph)
+    Node *highestDegreeNode = maxDegree(graph).second;
+    highestDegreeNode->color = FIRST_COLOR;
+
+    while (!isGraphColored(graph))
     {
-        int length = getNeighbours(graph, node).size();
-
-        if (maxDegree(graph) == length)
-        {
-            if (getLowestValidColor(graph, node) != FIRST_COLOR)
-            {
-                continue;
-            }
-            else
-            {
-                node.color = getLowestValidColor(graph, node);
-            }
-        }
-    }
-
-    //Then we color based on maximum saturation degree
-    while (!checkIfFullColored(graph))
-    {
-        // get max saturation degree
-        maxSat = getMaxSaturationDegree(graph);
-        
-        //check for every node if they have max saturation degree 
-        //and if are not neighbours then color them with same color
-        for (const Node &node : graph)
-        {
-            int count = 0;
-            int n = getNeighbours(graph, node).size();
-            if (getSaturationDegree(graph, node) == maxSat)
-            {
-
-                for (auto i : getNeighbours(graph, node))
-                {
-                    if (std::find(Ids.begin(), Ids.end(), i->id) != Ids.end())
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        count++;
-                    };
-                }
-            }
-            if (n == count)
-            {
-                Ids.emplace_back(node.id);
-            }
-
-            for (Node &node_ : graph)
-            {
-                if (std::find(Ids.begin(), Ids.end(), node_.id) == Ids.end())
-                {
-                    node_.color = getLowestValidColor(graph, node_);
-                }
-                else
-                    continue;
-            }
-
-            Ids.clear();
-        }
+        auto highestSaturationDegreeVertices = getMaxSaturationDegree(graph).second;
+        Node *nodeToColor = maxDegree(highestSaturationDegreeVertices).second;
+        int color = getLowestValidColor(graph, *nodeToColor);
+        nodeToColor->color = color;
     }
 }
 
@@ -213,51 +157,59 @@ std::vector<Node *> getNodesWithColor(Graph &graph, color_t color)
     return nodes;
 }
 
-
-
 int getSaturationDegree(const Graph &graph, const Node &node)
 {
-    std::vector<Node *> nodes;
+    std::vector<int> neighbourColors;
 
-    std::vector<int> satDegree;
-
-    if (node.color == NO_COLOR)
-    {
-        if (node.neighbours.size() > 0)
-        {
-            for (auto node_n : getNeighbours(graph, node))
-            {
-                if (node_n->color != NO_COLOR && std::find(satDegree.begin(), satDegree.end(), node_n->color) == satDegree.end())
-                {
-                    satDegree.emplace_back(node_n->color);
-                }
-            }
-        }
-        else
-            return 0;
-    }
-    else
-        return -1;
-    return satDegree.size();
-}
-
-int getMaxSaturationDegree(const Graph &graph)
-{
-    int max = 0;
-
-    for (const Node &node_g : graph)
-    {
-        if (max < getSaturationDegree(graph, node_g))
-        {
-            max = getSaturationDegree(graph, node_g);
+    for(auto node_n : getNeighbours(graph, node)) {
+        if(node_n->color != NO_COLOR) {
+            neighbourColors.emplace_back(node_n->color);
         }
     }
-    return max;
+
+    std::sort(neighbourColors.begin(), neighbourColors.end());
+    auto last = std::unique(neighbourColors.begin(), neighbourColors.end());
+    neighbourColors.erase(last, neighbourColors.end());
+
+    return neighbourColors.size();
 }
 
-bool checkIfFullColored(const Graph &graph)
+std::pair<int, std::vector<Node *>> getMaxSaturationDegree(Graph &graph, bool excludeColored)
 {
+    int maxSaturationDegree = INT_MIN;
 
+    for (const Node &node : graph)
+    {
+        if(excludeColored && node.color != NO_COLOR) {
+            continue;
+        }
+
+        int saturationDegree = getSaturationDegree(graph, node);
+        if (maxSaturationDegree < saturationDegree)
+        {
+            maxSaturationDegree = saturationDegree;
+        }
+    }
+
+    std::vector<Node *> nodesWithMaxDegree;
+
+    for (Node &node : graph)
+    {
+        if(excludeColored && node.color != NO_COLOR) {
+            continue;
+        }
+
+        int saturationDegree = getSaturationDegree(graph, node);
+        if(saturationDegree == maxSaturationDegree) {
+            nodesWithMaxDegree.emplace_back(&node);
+        }
+    }
+
+    return std::make_pair(maxSaturationDegree, nodesWithMaxDegree);
+}
+
+bool isGraphColored(const Graph &graph)
+{
     for (const Node &node : graph)
     {
         if (node.color == NO_COLOR)

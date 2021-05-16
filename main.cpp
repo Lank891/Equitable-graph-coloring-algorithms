@@ -36,24 +36,32 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    Graph g = readFromStream(file);
+    Graph graphGreedyFJK = readFromStream(file);
+    file.clear();
+    file.seekg(0);
+    Graph graphSLFFJK = readFromStream(file);
+    file.clear();
+    file.seekg(0);
+    Graph graphGreedyMFJK = readFromStream(file);
 
-    //std::cout << "Graph found:\n" << g << "\n\n------\n\n";
+    std::cout << "Graph found:\n" << graphGreedyFJK << "\n\n------\n\n";
 
-    greedyColoring(g);
+    greedyColoring(graphGreedyFJK);
+    greedyColoring(graphGreedyMFJK);
+    SLFColoring(graphSLFFJK);
+
     
-    std::cout << "Greedly coloured:\n" << g << "\nNumber of colors: " << numberOfUsedColors(g) << "\n\n------\n\n";
+    std::cout << "Greedly coloured:\n" << graphGreedyFJK << "\nNumber of colors: " << numberOfUsedColors(graphGreedyFJK) << "\n\n------\n\n";
 
-    //SLFColoring(g);
+    std::cout << "SLF coloured:\n" << graphSLFFJK << "\nNumber of colors: " << numberOfUsedColors(graphSLFFJK) << "\n\n------\n\n";
 
-    //std::cout << "SLF coloured:\n" << g << "\nNumber of colors: " << numberOfUsedColors(g) << "\n\n------\n\n";
-
-    FJK(g);
+    FJK(graphGreedyFJK);
+    FJK(graphSLFFJK);
     //MFJK(g);
-    //std::cout << "Greedly to FJK coloured:\n" << g << "\nNumber of colors (equitable): " << numberOfUsedColors(g) << "\n\n------\n\n";
-    //std::cout << "SLF to FJK coloured:\n" << g << "\nNumber of colors (equitable): " << numberOfUsedColors(g) << "\n\n------\n\n";
+    
+    std::cout << "Greedly to FJK coloured:\n" << graphGreedyFJK << "\nNumber of colors (equitable): " << numberOfUsedColors(graphGreedyFJK) << "\n\n------\n\n";
+    std::cout << "SLF to FJK coloured:\n" << graphSLFFJK << "\nNumber of colors (equitable): " << numberOfUsedColors(graphSLFFJK) << "\n\n------\n\n";
     //std::cout << "Greedly to MFJK coloured:\n" << g << "\nNumber of colors (equitable): " << numberOfUsedColors(g) << "\n\n------\n\n";
 
-    
     return 0;
 }
